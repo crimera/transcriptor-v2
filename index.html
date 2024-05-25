@@ -1,0 +1,51 @@
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="styles/index.css">
+
+	<title>Transcriptor v2</title>
+</head>
+
+<body class="inter-normal">
+	<nav class="flex vcenter space-between @vp-l:mx-m,my-s">
+		<div class="flex">
+			<!-- icon -->
+			<a class="flex vcenter inter-semibold mr-s text-lg" href="#">
+				<img class="mr-s" src="assets/scroll.png" alt="Logo" width="30" height="24">
+				Transcriptor v2
+			</a>
+
+			<!-- items -->
+			<div class="flex gap-s vcenter viewport-l" id="nav-items-container" style="display: flex;">
+				<a href="#" style="line-height: 1.5rem; font-size: 16;">
+					Home
+				</a>
+
+				<a href="#" style="line-height: 1.5rem; font-size: 16;">
+					Tools
+				</a>
+			</div>
+		</div>
+
+		<div class="viewport-s">
+			<button>Open items</button>
+		</div>
+	</nav>
+
+	<div class="dialog">
+		<button onclick="process()">Process</button>
+		<h>Transcript</h>
+		<p id="output">bruh</p>
+	</div>
+
+	<div class="dialog">
+		<h>History</h>
+	</div>
+</body>
+
+<script src="index.js"></script>
+<script src="websocket.js"></script>
+
+</html>

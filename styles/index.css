@@ -1,0 +1,142 @@
+/* tag */
+
+/* inter-regular - latin */
+@font-face {
+	font-display: swap;
+	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 400;
+	src: url('../assets/fonts/inter-v13-latin-regular.woff2') format('woff2');
+	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* inter-700 - latin */
+@font-face {
+	font-display: swap;
+	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../assets/fonts/inter-v13-latin-700.woff2') format('woff2');
+	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* inter-800 - latin */
+@font-face {
+	font-display: swap;
+	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 800;
+	src: url('../assets/fonts/inter-v13-latin-800.woff2') format('woff2');
+	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* inter-900 - latin */
+@font-face {
+	font-display: swap;
+	/* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: 'Inter';
+	font-style: normal;
+	font-weight: 900;
+	src: url('../assets/fonts/inter-v13-latin-900.woff2') format('woff2');
+	/* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+a {
+	text-decoration: none;
+	color: black;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+
+button {
+	background: none;
+	border: none;
+}
+
+h {
+	font-size: 1.25rem;
+	padding: 0;
+	margin: 0;
+}
+
+/* font */
+
+.inter-normal {
+	font-family: "Inter", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+}
+
+.inter-semibold {
+	font-family: "Inter", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 700;
+	font-style: normal;
+}
+
+.text-lg {
+	font-size: 1.125rem;
+	line-height: 1.75rem;
+}
+
+/* utils */
+
+.flex {
+	display: flex;
+	flex-direction: row;
+}
+
+.gap-s {
+	gap: 10px;
+}
+
+.space-between {
+	justify-content: space-between;
+}
+
+.vcenter {
+	align-items: center;
+}
+
+.vend {
+	align-items: end;
+}
+
+.my-s {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.ml-s {
+	margin-left: 20px;
+}
+
+.mr-s {
+	margin-right: 20px;
+}
+
+.mx-m {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.dialog {
+	border: 2px solid whitesmoke; border-radius: 10px;
+}
+
+@media screen and (max-width: 1000px) {
+	.viewport-l {
+		visibility: hidden;
+	}
+}
+
+@media screen and (min-width: 1000px) {
+	.viewport-s {
+		visibility: hidden;
+	}
+}
