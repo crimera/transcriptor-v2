@@ -107,9 +107,20 @@ h {
 	align-items: end;
 }
 
+/* padding */
+.p-s {
+	padding: 20px;
+}
+
+/* margins */
+
 .my-s {
 	margin-top: 20px;
 	margin-bottom: 20px;
+}
+
+.m-s {
+	margin: 20px;
 }
 
 .ml-s {
@@ -126,7 +137,8 @@ h {
 }
 
 .dialog {
-	border: 2px solid whitesmoke; border-radius: 10px;
+	border: 2px solid whitesmoke;
+	border-radius: 10px;
 }
 
 @media screen and (max-width: 1000px) {

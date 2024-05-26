@@ -11,6 +11,13 @@ import (
 
 var upgrader = websocket.Upgrader{}
 
+type Transcript struct {
+	Num     int    `json:"num"`
+	Start   string `json:"start"`
+	End     string `json:"end"`
+	Caption string `json:"caption"`
+}
+
 func main() {
 	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 
@@ -24,18 +31,35 @@ func main() {
 		}
 		defer conn.Close()
 
-		mt, _, err := conn.ReadMessage()
-		if err != nil {
-			log.Println("read failed:", err)
+		for {
+
+			messageType, message, err := conn.ReadMessage()
+			if err != nil {
+				log.Println("read failed:", err)
+				break
+			}
+
+			if string(message) == "process" {
+
+				outputAsJson := []Transcript{}
+				cb := func(segment whisper.Segment) {
+					outputAsJson = append(outputAsJson, Transcript{
+						Num:     segment.Num,
+						Start:   fmt.Sprintf("%02.f:%02.f:%02.f", segment.Start.Hours(), segment.Start.Minutes(), segment.End.Seconds()),
+						End:     fmt.Sprintf("%02.f:%02.f:%02.f", segment.End.Hours(), segment.End.Minutes(), segment.End.Seconds()),
+						Caption: segment.Text,
+					})
+					conn.WriteJSON(outputAsJson)
+				}
+
+				process("models/"+getModels()[0], "files/test.wav", cb)
+
+				fmt.Println("Done")
+				conn.WriteMessage(messageType, []byte("done"))
+			}
+
 		}
 
-		cb := func(segment whisper.Segment) {
-			output := fmt.Sprintf("%2d [%s->%s] : %s", segment.Num, segment.Start, segment.End, segment.Text)
-			conn.WriteMessage(mt, []byte(output))
-			log.Println(output)
-		}
-
-		process("models/"+getModels()[0], "files/test.wav", cb)
 	})
 
 	http.ListenAndServe(":8080", nil)
