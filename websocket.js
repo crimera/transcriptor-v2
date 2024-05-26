@@ -22,7 +22,7 @@ socket.onmessage = function(e) {
 		data.forEach((e) => {
 			/** @type {Transcript} **/
 			const transcript = e
-			html += "<p>" + "[" + transcript.start + "->" + transcript.end + "] " + transcript.caption + "</p>"
+			html += "<div class=\"transcript-item\"><p>" + "[" + transcript.start + "->" + transcript.end + "] " + transcript.caption + "</p><button>Edit</button></div>"
 		})
 
 		output.innerHTML = html
@@ -30,11 +30,26 @@ socket.onmessage = function(e) {
 		switch (e.data) {
 			case "done": {
 				console.log("Done")
+				isLoading(false)
+				break
+			}
+			case "processing": {
+				isLoading(true)
 				break
 			}
 		}
 	}
 };
+
+/** @param e { boolean } **/
+function isLoading(loading) {
+	const loader = document.getElementById("loader")
+	if (loading) {
+		loader.style.visibility = "visible"
+	} else {
+		loader.style.visibility = "hidden"
+	}
+}
 
 function process() {
 	socket.send("process")

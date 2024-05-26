@@ -8,7 +8,7 @@
 	<title>Transcriptor v2</title>
 </head>
 
-<body class="inter-normal">
+<body class="inter-normal damn">
 	<nav class="flex vcenter space-between @vp-l:mx-m,my-s">
 		<div class="flex">
 			<!-- icon -->
@@ -34,11 +34,19 @@
 		</div>
 	</nav>
 
+	<!-- spacer -->
+	<div class="@vp-s:h-s"></div>
+
 	<div class="dialog p-s">
-		<button onclick="process()">Process</button>
-		<h>Transcript</h>
-		<p id="output">bruh</p>
+		<div class="flex" style="align-items: start;">
+			<h style="margin-top: 8px;">Transcript</h>
+			<div id="loader" class="loader" style="display: inline-block; margin-left: 5px;"></div>
+		</div>
+
+		<div style="margin-top: 10px;" id="output"></div>
 	</div>
+
+	<button onclick="process()">Process</button>
 
 	<div class="dialog">
 		<h>History</h>

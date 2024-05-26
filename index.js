@@ -23,6 +23,24 @@ function screenChange() {
 				element.classList.add(i)
 			})
 		})
+
+		// remove smalls
+		let smalls = document.querySelectorAll("[class*='@vp-s']");
+
+		smalls.forEach((element) => {
+			let classes = element.classList
+			let id = ""
+			classes.forEach((i) => {
+				if (i.search("vp-s") == 1) {
+					id = i
+				}
+			})
+
+			let command = id.split(":")[1]
+			command.split(",").forEach((i) => {
+				element.classList.remove(i)
+			})
+		})
 	} else {
 		// small
 		console.log("small")
@@ -40,6 +58,25 @@ function screenChange() {
 			let command = id.split(":")[1]
 			command.split(",").forEach((i) => {
 				element.classList.remove(i)
+			})
+		})
+
+
+		let smalls = document.querySelectorAll("[class*='@vp-s']");
+
+		smalls.forEach((element) => {
+			let classes = element.classList
+			let id = ""
+			classes.forEach((i) => {
+				if (i.search("vp-s") == 1) {
+					id = i
+				}
+			})
+
+			console.log
+			let command = id.split(":")[1]
+			command.split(",").forEach((i) => {
+				element.classList.add(i)
 			})
 		})
 	}

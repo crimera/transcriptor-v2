@@ -41,6 +41,9 @@ func main() {
 
 			if string(message) == "process" {
 
+				fmt.Println("Processing")
+				conn.WriteMessage(messageType, []byte("processing"))
+
 				outputAsJson := []Transcript{}
 				cb := func(segment whisper.Segment) {
 					outputAsJson = append(outputAsJson, Transcript{
@@ -54,12 +57,10 @@ func main() {
 
 				process("models/"+getModels()[0], "files/test.wav", cb)
 
-				fmt.Println("Done")
+				fmt.Println("Done processing")
 				conn.WriteMessage(messageType, []byte("done"))
 			}
-
 		}
-
 	})
 
 	http.ListenAndServe(":8080", nil)
