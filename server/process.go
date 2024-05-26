@@ -8,10 +8,12 @@ import (
 	wav "github.com/go-audio/wav"
 )
 
-func process(callback whisper.SegmentCallback) {
-	var modelpath string = "ggml-base.en-q5_1.bin" // Path to the model
-	var samples []float32                          // Samples to process
-	filename := "test.wav"
+func getModels() []string {
+	return []string{"ggml-base.en-q5_1.bin"}
+}
+
+func process(modelpath string, filename string, callback whisper.SegmentCallback) {
+	var samples []float32 // Samples to process
 
 	// Open the file
 	fmt.Printf("Loading %q\n", filename)

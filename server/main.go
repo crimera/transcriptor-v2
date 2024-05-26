@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -11,9 +12,9 @@ import (
 var upgrader = websocket.Upgrader{}
 
 func main() {
+	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 
 	http.HandleFunc("/whisper", func(w http.ResponseWriter, r *http.Request) {
-		upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 
 		// Upgrade upgrades the HTTP server connection to the WebSocket protocol.
 		conn, err := upgrader.Upgrade(w, r, nil)
@@ -29,10 +30,12 @@ func main() {
 		}
 
 		cb := func(segment whisper.Segment) {
-			conn.WriteMessage(mt, []byte(segment.Text))
+			output := fmt.Sprintf("%2d [%s->%s] : %s", segment.Num, segment.Start, segment.End, segment.Text)
+			conn.WriteMessage(mt, []byte(output))
+			log.Println(output)
 		}
 
-		process(cb)
+		process("models/"+getModels()[0], "files/test.wav", cb)
 	})
 
 	http.ListenAndServe(":8080", nil)
