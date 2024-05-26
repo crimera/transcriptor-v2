@@ -10,6 +10,7 @@ import (
 )
 
 var upgrader = websocket.Upgrader{}
+var currentTranscription = []Transcript{}
 
 type Transcript struct {
 	Num     int    `json:"num"`
@@ -41,24 +42,28 @@ func main() {
 
 			if string(message) == "process" {
 
+				currentTranscription = []Transcript{}
+
 				fmt.Println("Processing")
 				conn.WriteMessage(messageType, []byte("processing"))
 
-				outputAsJson := []Transcript{}
 				cb := func(segment whisper.Segment) {
-					outputAsJson = append(outputAsJson, Transcript{
+					currentTranscription = append(currentTranscription, Transcript{
 						Num:     segment.Num,
 						Start:   fmt.Sprintf("%02.f:%02.f:%02.f", segment.Start.Hours(), segment.Start.Minutes(), segment.End.Seconds()),
 						End:     fmt.Sprintf("%02.f:%02.f:%02.f", segment.End.Hours(), segment.End.Minutes(), segment.End.Seconds()),
 						Caption: segment.Text,
 					})
-					conn.WriteJSON(outputAsJson)
+					conn.WriteJSON(currentTranscription)
 				}
 
 				process("models/"+getModels()[0], "files/test.wav", cb)
 
 				fmt.Println("Done processing")
 				conn.WriteMessage(messageType, []byte("done"))
+			} else if string(message) == "currentTranscription" {
+				fmt.Println("Sent transcripts")
+				conn.WriteJSON(currentTranscription)
 			}
 		}
 	})

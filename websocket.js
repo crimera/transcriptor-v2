@@ -6,20 +6,24 @@
  * @property {string} caption
  */
 
-var socket = new WebSocket("ws://localhost:8080/whisper");
-var output = document.getElementById("output")
+let socket = new WebSocket("ws://localhost:8080/whisper");
+let output = document.getElementById("output")
 
 socket.onopen = function() {
 	console.log("Status: Connected\n")
-};
+
+	// get current transcripts
+	socket.send("currentTranscription")
+}
 
 /** @param e { MessageEvent } **/
 socket.onmessage = function(e) {
+
 	/** @type { []Transcript } **/
 	try {
-		const data = JSON.parse(e.data)
+		currentTranscription = JSON.parse(e.data)
 		let html = ""
-		data.forEach((e) => {
+		currentTranscription.forEach((e) => {
 			/** @type {Transcript} **/
 			const transcript = e
 			html += "<div class=\"transcript-item\"><p>" + "[" + transcript.start + "->" + transcript.end + "] " + transcript.caption + "</p><button>Edit</button></div>"
@@ -52,5 +56,6 @@ function isLoading(loading) {
 }
 
 function process() {
+	output.innerHTML = ""
 	socket.send("process")
 }
