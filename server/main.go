@@ -40,30 +40,40 @@ func main() {
 				break
 			}
 
-			if string(message) == "process" {
+			switch string(message) {
+			case "process":
+				{
+					currentTranscription = []Transcript{}
 
-				currentTranscription = []Transcript{}
+					fmt.Println("Processing")
+					conn.WriteMessage(messageType, []byte("processing"))
 
-				fmt.Println("Processing")
-				conn.WriteMessage(messageType, []byte("processing"))
+					cb := func(segment whisper.Segment) {
+						currentTranscription = append(currentTranscription, Transcript{
+							Num:     segment.Num,
+							Start:   fmt.Sprintf("%02.f:%02.f:%02.f", segment.Start.Hours(), segment.Start.Minutes(), segment.End.Seconds()),
+							End:     fmt.Sprintf("%02.f:%02.f:%02.f", segment.End.Hours(), segment.End.Minutes(), segment.End.Seconds()),
+							Caption: segment.Text,
+						})
+						conn.WriteJSON(currentTranscription)
+					}
 
-				cb := func(segment whisper.Segment) {
-					currentTranscription = append(currentTranscription, Transcript{
-						Num:     segment.Num,
-						Start:   fmt.Sprintf("%02.f:%02.f:%02.f", segment.Start.Hours(), segment.Start.Minutes(), segment.End.Seconds()),
-						End:     fmt.Sprintf("%02.f:%02.f:%02.f", segment.End.Hours(), segment.End.Minutes(), segment.End.Seconds()),
-						Caption: segment.Text,
-					})
-					conn.WriteJSON(currentTranscription)
+					process("models/"+getModels()[0], "files/test.wav", cb)
+
+					fmt.Println("Done processing")
+					conn.WriteMessage(messageType, []byte("done"))
+					break
 				}
-
-				process("models/"+getModels()[0], "files/test.wav", cb)
-
-				fmt.Println("Done processing")
-				conn.WriteMessage(messageType, []byte("done"))
-			} else if string(message) == "currentTranscription" {
-				fmt.Println("Sent transcripts")
-				conn.WriteJSON(currentTranscription)
+			case "currentTranscription":
+				{
+					fmt.Println("Sent transcripts")
+					conn.WriteJSON(currentTranscription)
+					break
+				}
+			case "clearCurrentTranscription":
+				{
+					currentTranscription = []Transcript{}
+				}
 			}
 		}
 	})

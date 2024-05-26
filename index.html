@@ -43,13 +43,15 @@
 			<div id="loader" class="loader" style="display: inline-block; margin-left: 5px;"></div>
 		</div>
 
-		<div style="margin-top: 10px;" id="output"></div>
+		<button class="mt-s" onclick="process()">Process</button>
+		<button onclick="doneClicked()">Done</button>
+
+		<div class="mt-s" id="output"></div>
 	</div>
 
-	<button onclick="process()">Process</button>
-
-	<div class="dialog">
+	<div class="dialog mt-s p-s">
 		<h>History</h>
+		<div class="mt-s" id="history"></div>
 	</div>
 </body>
 

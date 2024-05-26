@@ -1,1 +1,1 @@
-export C_INCLUDE_PATH="$HOME/dev/whisper.cpp"; export LIBRARY_PATH="$HOME/dev/whisper.cpp"; go run .
+export C_INCLUDE_PATH="$HOME/dev/whisper.cpp"; export LIBRARY_PATH="$HOME/dev/whisper.cpp"; air
