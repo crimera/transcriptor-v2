@@ -6,6 +6,8 @@
  * @property {string} caption
  */
 
+import { transcriptItem } from "./components.js";
+
 let socket = new WebSocket("ws://localhost:8080/whisper");
 
 // views
@@ -29,8 +31,7 @@ function setHistory() {
 		transcription.forEach((e) => {
 			/** @type {Transcript} **/
 			const transcript = e
-			// TODO: make a function that constructs transcript-item views
-			html += "<div> <p>" + "[" + transcript.start + "->" + transcript.end + "] " + transcript.caption + "</p><button>Edit</button></div>"
+			html += transcriptItem(transcript)
 		})
 	})
 
@@ -53,7 +54,7 @@ socket.onmessage = function(e) {
 		currentTranscription.forEach((e) => {
 			/** @type {Transcript} **/
 			const transcript = e
-			html += "<div class=\"transcript-item flex vcenter space-between\"><p>" + "[" + transcript.start + "->" + transcript.end + "] " + transcript.caption + "</p><button>Edit</button></div>"
+			html += transcriptItem(transcript)
 		})
 
 		output.innerHTML = html
@@ -82,12 +83,12 @@ function isLoading(loading) {
 	}
 }
 
-function process() {
+export function process() {
 	output.innerHTML = ""
 	socket.send("process")
 }
 
-function doneClicked() {
+export function doneClicked() {
 	if (currentTranscription.length != 0) {
 		history.push(currentTranscription)
 		socket.send("clearCurrentTranscription")

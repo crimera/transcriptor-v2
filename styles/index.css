@@ -62,12 +62,12 @@ button {
 
 	border: 2px solid whitesmoke;
 	border-color: rgb(209 213 219);
-	border-radius: 999px;
+	border-radius: 10px;
 
 	padding-top: .5rem;
 	padding-bottom: .5rem;
-	padding-left: 1.25rem;
-	padding-right: 1.25rem;
+	padding-left: .8rem;
+	padding-right: .8rem;
 }
 
 button:hover {
@@ -116,6 +116,15 @@ h {
 	flex-direction: row;
 }
 
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.col {
+	display: flex;
+}
+
 .gap-s {
 	gap: 10px;
 }
@@ -158,6 +167,10 @@ h {
 	margin-top: 20px;
 }
 
+.mt-xs {
+	margin-top: 10px;
+}
+
 .m-s {
 	margin: 20px;
 }
@@ -167,6 +180,15 @@ h {
 }
 
 .mr-s {
+	margin-right: 20px;
+}
+
+.mr-xs {
+	margin-right: 10px;
+}
+
+.mx-s {
+	margin-left: 20px;
 	margin-right: 20px;
 }
 

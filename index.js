@@ -1,4 +1,17 @@
+import { process, doneClicked } from "./websocket.js";
+
 screenChange()
+
+const processBtn = document.getElementById("processBtn")
+const doneBtn = document.getElementById("doneBtn")
+
+processBtn.addEventListener("click", () => {
+	process()
+})
+
+doneBtn.addEventListener("click", () => {
+	doneClicked()
+})
 
 window.addEventListener("resize", function() {
 	screenChange()

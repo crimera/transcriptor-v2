@@ -9,7 +9,7 @@
 </head>
 
 <body class="inter-normal damn">
-	<nav class="flex vcenter space-between @vp-l:mx-m,my-s">
+	<nav class="flex vcenter space-between" style="margin: 0px 1px">
 		<div class="flex">
 			<!-- icon -->
 			<a class="flex vcenter inter-semibold mr-s text-lg" href="#">
@@ -29,36 +29,69 @@
 			</div>
 		</div>
 
+		<!-- Show more items icon-->
 		<div class="viewport-s">
-			<!-- TODO: should be an icon
-			 make a div where it shows the items. The div should cover the screen -->
-			<button>Open items</button>
+			<!-- TODO: add a div containing items, should fill up the screen-->
+			<a href="">
+				<span>
+					<img class="mr-s" src="assets/icons/menu-outline.svg" alt="Logo" width="30"
+						height="24">
+				</span>
+			</a>
 		</div>
 	</nav>
 
 	<!-- spacer -->
 	<div class="@vp-s:h-s"></div>
 
-	<div class="card p-s">
-		<div class="flex" style="align-items: start;">
-			<h style="margin-top: 8px;">Transcript</h>
-			<div id="loader" class="loader" style="display: inline-block; margin-left: 5px;"></div>
+	<!-- main -->
+	<div class="@vp-l:mx-m,my-s">
+
+		<!-- Input and trancript container -->
+		<div class="col gap-s">
+
+			<!-- Input card-->
+			<div class="card p-s" style="flex: 1;">
+				<div class="flex" style="align-items: start;">
+					<h style="margin-top: 8px;">Input</h>
+				</div>
+
+				<div class="flex vcenter gap-s mt-xs">
+					<button class="flex vcenter" id="processBtn">
+						<img class="mr-xs" src="assets/icons/color-wand-outline.svg" alt="Logo"
+							width="15" height="15">
+						Process</button>
+					<button id="doneBtn" class="flex vcenter">
+						<img class="mr-xs" src="assets/icons/checkmark-outline.svg" alt="Logo"
+							width="15" height="15">
+						Done
+					</button>
+				</div>
+			</div>
+
+			<!-- TODO: add ability to input audio -->
+			<!-- Transcript card-->
+			<div class="card p-s" style="flex: 2;">
+				<div class=" flex" style="align-items: start;">
+					<h style="margin-top: 8px;">Transcript</h>
+					<div id="loader" class="loader"
+						style="display: inline-block; margin-left: 5px;"></div>
+				</div>
+
+				<div class="mt-s" id="output"></div>
+			</div>
 		</div>
 
-		<button class="mt-s" onclick="process()">Process</button>
-		<button onclick="doneClicked()">Done</button>
-
-		<div class="mt-s" id="output"></div>
+		<!-- History card -->
+		<div class="card mt-s p-s">
+			<!-- TODO: add download button -->
+			<h>History</h>
+			<div class="mt-s" id="history"></div>
+		</div>
 	</div>
 
-	<div class="card mt-s p-s">
-		<!-- TODO: add download button -->
-		<h>History</h>
-		<div class="mt-s" id="history"></div>
-	</div>
+	<script type="module" src="websocket.js"></script>
+	<script type="module" src="index.js"></script>
 </body>
-
-<script src="index.js"></script>
-<script src="websocket.js"></script>
 
 </html>
