@@ -15,7 +15,7 @@ let historyView = document.getElementById("history")
 
 // server stuff
 /** @type { Array } **/
-// TODO store history on the server
+// TODO: store history on the server
 let history = []
 let currentTranscription = []
 
@@ -29,6 +29,7 @@ function setHistory() {
 		transcription.forEach((e) => {
 			/** @type {Transcript} **/
 			const transcript = e
+			// TODO: make a function that constructs transcript-item views
 			html += "<div> <p>" + "[" + transcript.start + "->" + transcript.end + "] " + transcript.caption + "</p><button>Edit</button></div>"
 		})
 	})
@@ -52,7 +53,7 @@ socket.onmessage = function(e) {
 		currentTranscription.forEach((e) => {
 			/** @type {Transcript} **/
 			const transcript = e
-			html += "<div class=\"transcript-item\"><p>" + "[" + transcript.start + "->" + transcript.end + "] " + transcript.caption + "</p><button>Edit</button></div>"
+			html += "<div class=\"transcript-item flex vcenter space-between\"><p>" + "[" + transcript.start + "->" + transcript.end + "] " + transcript.caption + "</p><button>Edit</button></div>"
 		})
 
 		output.innerHTML = html
