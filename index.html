@@ -48,7 +48,7 @@
 	<div class="@vp-l:mx-m,my-s">
 
 		<!-- Input and trancript container -->
-		<div class="col gap-s">
+		<div class="flex @vp-s:col @vp-l:h-m gap-s">
 
 			<!-- Input card-->
 			<div class="card p-s" style="flex: 1;">
@@ -57,6 +57,15 @@
 				</div>
 
 				<div class="flex vcenter gap-s mt-xs">
+					<!-- TODO: change icon -->
+					<button id="importBtn" class="flex vcenter">
+						<img class="mr-xs" src="assets/icons/color-wand-outline.svg" alt="Logo"
+							width="15" height="15">
+						Import
+						<input class="hidden" name="file" type="file"
+							style="width: 0; height: 0;">
+					</button>
+
 					<button class="flex vcenter" id="processBtn">
 						<img class="mr-xs" src="assets/icons/color-wand-outline.svg" alt="Logo"
 							width="15" height="15">

@@ -113,16 +113,18 @@ h {
 
 .flex {
 	display: flex;
-	flex-direction: row;
 }
 
 .row {
-	display: flex;
 	flex-direction: row;
 }
 
 .col {
-	display: flex;
+	flex-direction: column;
+}
+
+.hidden {
+	visibility: hidden;
 }
 
 .gap-s {
@@ -195,6 +197,10 @@ h {
 .mx-m {
 	margin-left: 50px;
 	margin-right: 50px;
+}
+
+.h-m {
+	height: 500px;
 }
 
 .card {
