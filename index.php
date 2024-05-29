@@ -32,7 +32,7 @@
 		<!-- Show more items icon-->
 		<div class="viewport-s">
 			<!-- TODO: add a div containing items, should fill up the screen-->
-			<a href="">
+			<a href="#">
 				<span>
 					<img class="mr-s" src="assets/icons/menu-outline.svg" alt="Logo" width="30"
 						height="24">
@@ -48,7 +48,7 @@
 	<div class="@vp-l:mx-m,my-s">
 
 		<!-- Input and trancript container -->
-		<div class="flex @vp-s:col @vp-l:h-m gap-s">
+		<div class="flex @vp-s:col,h-l @vp-l:h-m gap-s">
 
 			<!-- Input card-->
 			<div class="card p-s" style="flex: 1;">
