@@ -51,39 +51,45 @@
 		<div class="flex @vp-s:col,h-l @vp-l:h-m gap-s">
 
 			<!-- Input card-->
-			<div class="card p-s" style="flex: 1;">
+			<div class="card p-s">
 				<div class="flex" style="align-items: start;">
 					<h style="margin-top: 8px;">Input</h>
 				</div>
 
-				<div class="flex vcenter gap-s mt-xs">
-					<!-- TODO: change icon -->
-					<button id="importBtn" class="flex vcenter">
-						<img class="mr-xs" src="assets/icons/send-outline.svg" alt="Logo"
-							width="15" height="15">
-						Import
-						<input class="hidden" id="fileInput" name="file" type="file">
-					</button>
+				<!-- TODO: the icons should collapse if it overlapses with the width of the input card-->
+				<div class="flex vcenter gap-s mt-xs space-between">
+					<div class="flex vcenter gap-s">
+						<button id="importBtn" class="flex vcenter">
+							<img class="mr-xs" src="assets/icons/send-outline.svg"
+								alt="Logo" width="15" height="15">
+							Import
+							<input class="hidden" id="fileInput" name="file" type="file">
+						</button>
 
-					<!-- TODO: use session to save file input -->
-					<button class="flex vcenter" <?php if (!isset($_FILES['file']['name'])) {
-						echo "disabled" ; } ?> id="processBtn">
-						<img class="mr-xs logo" width="15" height="15" class="mr-xs"
-							src="assets/icons/color-wand-outline.svg" alt="Logo">
-						Process
-					</button>
-					<button id="doneBtn" disabled class="flex vcenter">
-						<img class="mr-xs logo" style="margin-right: 10px;"
-							src="assets/icons/checkmark-outline.svg" alt="Logo" width="15"
-							height="15">
-						Done
+						<!-- TODO: use session to save file input -->
+						<button class="flex vcenter" <?php if (!isset($_FILES['file']['name']))
+							{ echo "disabled" ; } ?> id="processBtn">
+							<img class="mr-xs logo" width="15" height="15" class="mr-xs"
+								src="assets/icons/color-wand-outline.svg" alt="Logo">
+							Process
+						</button>
+						<button id="doneBtn" disabled class="flex vcenter">
+							<img class="mr-xs logo" style="margin-right: 10px;"
+								src="assets/icons/checkmark-outline.svg" alt="Logo"
+								width="15" height="15">
+							Save
+						</button>
+					</div>
+					<!-- TODO: add functionality -->
+					<button id="exportBtn" disabled class="flex vcenter">
+						<img class="logo" src="assets/icons/download-outline.svg" alt="Logo"
+							width="15" height="15">
 					</button>
 				</div>
 			</div>
 
-			<!-- TODO: add ability to input audio -->
 			<!-- Transcript card-->
-			<div class="card p-s" style="flex: 2;">
+			<div class="card p-s" style="flex: 1;">
 				<div class=" flex" style="align-items: start;">
 					<h style="margin-top: 8px;">Transcript</h>
 					<div id="loader" class="loader"

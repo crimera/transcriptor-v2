@@ -3,7 +3,7 @@ import { process, doneClicked } from "./websocket.js";
 screenChange()
 
 const processBtn = document.getElementById("processBtn")
-const doneBtn = document.getElementById("doneBtn")
+export const doneBtn = document.getElementById("doneBtn")
 const importBtn = document.getElementById("importBtn")
 /** @type { HTMLInputElement } **/
 const fileInput = document.getElementById("fileInput")
