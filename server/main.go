@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/ggerganov/whisper.cpp/bindings/go/pkg/whisper"
 	"github.com/gorilla/websocket"
@@ -34,36 +35,45 @@ func main() {
 
 		for {
 
-			messageType, message, err := conn.ReadMessage()
+			messageType, messageByte, err := conn.ReadMessage()
 			if err != nil {
 				log.Println("read failed:", err)
 				break
 			}
 
-			switch string(message) {
-			case "process":
-				{
-					currentTranscription = []Transcript{}
+			message := string(messageByte)
 
-					fmt.Println("Processing")
-					conn.WriteMessage(messageType, []byte("processing"))
+			fmt.Print(message)
 
-					cb := func(segment whisper.Segment) {
-						currentTranscription = append(currentTranscription, Transcript{
-							Num:     segment.Num,
-							Start:   fmt.Sprintf("%02.f:%02.f:%02.f", segment.Start.Hours(), segment.Start.Minutes(), segment.End.Seconds()),
-							End:     fmt.Sprintf("%02.f:%02.f:%02.f", segment.End.Hours(), segment.End.Minutes(), segment.End.Seconds()),
-							Caption: segment.Text,
-						})
-						conn.WriteJSON(currentTranscription)
-					}
+			cmd := strings.Split(message, ":")
+			if cmd[0] == "process" {
+				currentTranscription = []Transcript{}
 
-					process("models/"+getModels()[0], "files/test.wav", cb)
+				fmt.Println("Processing")
+				conn.WriteMessage(messageType, []byte("processing"))
 
-					fmt.Println("Done processing")
-					conn.WriteMessage(messageType, []byte("done"))
-					break
+				cb := func(segment whisper.Segment) {
+					currentTranscription = append(currentTranscription, Transcript{
+						Num:     segment.Num,
+						Start:   fmt.Sprintf("%02.f:%02.f:%02.f", segment.Start.Hours(), segment.Start.Minutes(), segment.End.Seconds()),
+						End:     fmt.Sprintf("%02.f:%02.f:%02.f", segment.End.Hours(), segment.End.Minutes(), segment.End.Seconds()),
+						Caption: segment.Text,
+					})
+					conn.WriteJSON(currentTranscription)
 				}
+
+				e := process("models/"+getModels()[0], "files/"+cmd[1], cb)
+				if e != nil {
+					// TODO: should post an error message
+					conn.WriteMessage(messageType, []byte("error"))
+				}
+
+				fmt.Println("Done processing")
+				conn.WriteMessage(messageType, []byte("done"))
+				continue
+			}
+
+			switch message {
 			case "currentTranscription":
 				{
 					fmt.Println("Sent transcripts")
@@ -73,6 +83,7 @@ func main() {
 			case "clearCurrentTranscription":
 				{
 					currentTranscription = []Transcript{}
+					break
 				}
 			}
 		}

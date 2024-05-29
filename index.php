@@ -9,7 +9,7 @@
 </head>
 
 <body class="inter-normal damn">
-	<nav class="flex vcenter space-between" style="margin: 0px 1px">
+	<nav class="flex vcenter space-between" style="margin: 10px 1px">
 		<div class="flex">
 			<!-- icon -->
 			<a class="flex vcenter inter-semibold mr-s text-lg" href="#">
@@ -59,20 +59,23 @@
 				<div class="flex vcenter gap-s mt-xs">
 					<!-- TODO: change icon -->
 					<button id="importBtn" class="flex vcenter">
-						<img class="mr-xs" src="assets/icons/color-wand-outline.svg" alt="Logo"
+						<img class="mr-xs" src="assets/icons/send-outline.svg" alt="Logo"
 							width="15" height="15">
 						Import
-						<input class="hidden" name="file" type="file"
-							style="width: 0; height: 0;">
+						<input class="hidden" id="fileInput" name="file" type="file">
 					</button>
 
-					<button class="flex vcenter" id="processBtn">
-						<img class="mr-xs" src="assets/icons/color-wand-outline.svg" alt="Logo"
-							width="15" height="15">
-						Process</button>
-					<button id="doneBtn" class="flex vcenter">
-						<img class="mr-xs" src="assets/icons/checkmark-outline.svg" alt="Logo"
-							width="15" height="15">
+					<!-- TODO: use session to save file input -->
+					<button class="flex vcenter" <?php if (!isset($_FILES['file']['name'])) {
+						echo "disabled" ; } ?> id="processBtn">
+						<img class="mr-xs logo" width="15" height="15" class="mr-xs"
+							src="assets/icons/color-wand-outline.svg" alt="Logo">
+						Process
+					</button>
+					<button id="doneBtn" disabled class="flex vcenter">
+						<img class="mr-xs logo" style="margin-right: 10px;"
+							src="assets/icons/checkmark-outline.svg" alt="Logo" width="15"
+							height="15">
 						Done
 					</button>
 				</div>

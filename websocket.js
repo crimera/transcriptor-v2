@@ -60,7 +60,7 @@ socket.onmessage = function(e) {
 		output.innerHTML = html
 	} catch {
 		switch (e.data) {
-			case "done": {
+			case "done" || "error": {
 				console.log("Done")
 				isLoading(false)
 				break
@@ -83,9 +83,9 @@ function isLoading(loading) {
 	}
 }
 
-export function process() {
+export function process(filename) {
 	output.innerHTML = ""
-	socket.send("process")
+	socket.send("process:" + filename)
 }
 
 export function doneClicked() {

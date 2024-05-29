@@ -70,8 +70,12 @@ button {
 	padding-right: .8rem;
 }
 
-button:hover {
+button:enabled:hover {
 	background-color: rgb(241 245 249);
+}
+
+button:disabled .logo {
+	filter: opacity(0.3);
 }
 
 h {
@@ -125,6 +129,10 @@ h {
 
 .hidden {
 	visibility: hidden;
+	width: 0;
+	height: 0;
+	padding: 0;
+	margin: 0;
 }
 
 .gap-s {

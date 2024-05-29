@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -12,7 +13,7 @@ func getModels() []string {
 	return []string{"ggml-base.en-q5_1.bin"}
 }
 
-func process(modelpath string, filename string, callback whisper.SegmentCallback) {
+func process(modelpath string, filename string, callback whisper.SegmentCallback) (e error) {
 	var samples []float32 // Samples to process
 
 	// Open the file
@@ -24,9 +25,10 @@ func process(modelpath string, filename string, callback whisper.SegmentCallback
 	defer fh.Close()
 
 	// Decode the WAV file - load the full buffer
+	// TODO: add support for other files
 	dec := wav.NewDecoder(fh)
 	if buf, err := dec.FullPCMBuffer(); err != nil {
-		panic(err)
+		return err
 	} else if dec.SampleRate != whisper.SampleRate {
 		fmt.Printf("unsupported sample rate: %d", whisper.SampleRate)
 		fmt.Printf("unsupported sample rate: %d", dec.SampleRate)
@@ -39,17 +41,19 @@ func process(modelpath string, filename string, callback whisper.SegmentCallback
 	// Load the model
 	model, err := whisper.New(modelpath)
 	if err != nil {
-		panic(err)
+		return err
 	}
 	defer model.Close()
 
 	// Process samples
 	context, err := model.NewContext()
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	if err := context.Process(samples, callback, nil); err != nil {
-		panic(err)
+		return err
 	}
+
+	return
 }
