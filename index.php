@@ -80,7 +80,7 @@
 							Save
 						</button>
 					</div>
-					<!-- TODO: add functionality -->
+					<!-- TODO: can be extracted as a component -->
 					<button id="exportBtn" disabled class="flex vcenter">
 						<img class="logo" src="assets/icons/download-outline.svg" alt="Logo"
 							width="15" height="15">
@@ -108,8 +108,8 @@
 		</div>
 	</div>
 
-	<script type="module" src="websocket.js"></script>
-	<script type="module" src="index.js"></script>
+	<script type="module" src="js/websocket.js"></script>
+	<script type="module" src="js/index.js"></script>
 </body>
 
 </html>

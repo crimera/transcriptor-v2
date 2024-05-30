@@ -7,7 +7,7 @@
  */
 
 import { transcriptItem } from "./components.js";
-import { doneBtn } from "./index.js";
+import { doneBtn, exportBtn } from "./elements.js";
 
 let socket = new WebSocket("ws://localhost:8080/whisper");
 
@@ -64,6 +64,7 @@ socket.onmessage = function(e) {
 			case "done": {
 				console.log("Done")
 				doneBtn.removeAttribute("disabled")
+				exportBtn.removeAttribute("disabled")
 				isLoading(false)
 				break
 			}
