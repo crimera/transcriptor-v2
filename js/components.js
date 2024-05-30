@@ -1,5 +1,6 @@
 /* @param transcript { Transcript } */
 export function transcriptItem(transcript, id, editClicked) {
+	// TODO: add the start timestamp
 	let caption = pharagraphView({
 		classList: "mr-xs caption",
 		text: transcript.caption
