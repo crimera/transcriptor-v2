@@ -1,5 +1,5 @@
-import { process, doneClicked } from "./websocket.js";
-import { downloadString } from "./utils.js"
+import { process, doneClicked, currentTranscription } from "./websocket.js";
+import { downloadString, transcriptToSrt } from "./utils.js"
 
 export const processBtn = document.getElementById("processBtn")
 export const doneBtn = document.getElementById("doneBtn")
@@ -21,8 +21,7 @@ importBtn.addEventListener("click", () => {
 })
 
 exportBtn.addEventListener('click', () => {
-	downloadString("bruh", "text/plaintext", "input.srt")
-	console.log('gaming')
+	downloadString(transcriptToSrt(currentTranscription), "text/plaintext", "input.srt")
 })
 
 // do something when inputFile value is changed

@@ -16,3 +16,30 @@ export function downloadString(text, fileType, fileName) {
 	document.body.removeChild(a)
 	setTimeout(() => { URL.revokeObjectURL(a.href) }, 1500)
 }
+
+/**
+ * @typedef Transcript
+ * @property {string} num
+ * @property {string} start
+ * @property {string} end
+ * @property {string} caption
+ */
+
+/**
+ * @param { Transcript[] } transcript 
+ **/
+export function transcriptToSrt(transcript) {
+	let out = []
+
+	transcript.forEach((t) => {
+		out.push(
+			t.num + 1,
+			t.start + ",000 --> " + t.end + ",000",
+			t.caption,
+			''
+		)
+	})
+
+	console.log(out.join('\n'))
+	return out.join('\n')
+}

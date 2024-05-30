@@ -81,6 +81,7 @@
 						</button>
 					</div>
 					<!-- TODO: can be extracted as a component -->
+					<!-- TODO: move export button to the history card -->
 					<button id="exportBtn" disabled class="flex vcenter">
 						<img class="logo" src="assets/icons/download-outline.svg" alt="Logo"
 							width="15" height="15">
@@ -103,6 +104,7 @@
 		<!-- History card -->
 		<div class="card mt-s p-s">
 			<!-- TODO: add download button -->
+			<!-- TODO: if we click an edit button in the history we make a new view, where we can edit the transcript and view the video for an easy reference -->
 			<h>History</h>
 			<div class="mt-s" id="history"></div>
 		</div>

@@ -20,23 +20,21 @@ let historyView = document.getElementById("history")
 /** @type { Array } **/
 // TODO: store history on the server
 let history = []
-let currentTranscription = []
+export let currentTranscription = []
+
 
 // init
 setHistory()
 
 function setHistory() {
 	// set history
-	let html = ""
 	history.forEach((transcription) => {
 		transcription.forEach((e) => {
 			/** @type {Transcript} **/
 			const transcript = e
-			html += transcriptItem(transcript)
+			historyView.appendChild(transcriptItem(transcript))
 		})
 	})
-
-	historyView.innerHTML = html
 }
 
 socket.onopen = function() {
@@ -51,14 +49,26 @@ socket.onmessage = function(e) {
 	/** @type { []Transcript } **/
 	try {
 		currentTranscription = JSON.parse(e.data)
-		let html = ""
+
+		if (currentTranscription.length != 0) {
+			exportBtn.removeAttribute('disabled')
+		}
+
+		output.innerHTML = ''
+
 		currentTranscription.forEach((e) => {
 			/** @type {Transcript} **/
 			const transcript = e
-			html += transcriptItem(transcript)
+			output.appendChild(transcriptItem(
+				transcript,
+				transcript.num.toString(),
+				(id, caption) => {
+					socket.send("change:" + id + ":" + caption)
+					socket.send("currentTranscription")
+					console.log(id + caption)
+				}
+			))
 		})
-
-		output.innerHTML = html
 	} catch {
 		switch (e.data) {
 			case "done": {

@@ -258,6 +258,21 @@ h {
 	}
 }
 
+.transcript-item {
+	border-radius: 10px;
+	margin: 0px;
+	padding: 10px;
+}
+
+.transcript-item button {
+	visibility: hidden;
+	margin-right: 5px;
+}
+
 .transcript-item:hover {
 	background: whitesmoke;
+
+	button {
+		visibility: visible;
+	}
 }

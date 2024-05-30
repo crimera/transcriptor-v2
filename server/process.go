@@ -24,7 +24,7 @@ func process(modelpath string, filename string, callback whisper.SegmentCallback
 	defer fh.Close()
 
 	// Decode the WAV file - load the full buffer
-	// TODO: add support for other files
+	// TODO: add support for other files, top priority should be videos
 	dec := wav.NewDecoder(fh)
 	if buf, err := dec.FullPCMBuffer(); err != nil {
 		return err
