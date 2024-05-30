@@ -2,10 +2,14 @@
 - php
 - golang
 - air
-- whisper compiled
+- whisper.cpp go bindings
 
-# Run
+# Usage
+- start web php
+```sh
 php -S 127.0.0.1:8000
-
-# Run trancsipt server
+```
+- start trancript server
+```sh
 cd server; ./run.sh
+```
