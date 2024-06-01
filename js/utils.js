@@ -34,7 +34,7 @@ export function transcriptToSrt(transcript) {
 	transcript.forEach((t) => {
 		out.push(
 			t.num + 1,
-			t.start + ",000 --> " + t.end + ",000",
+			t.start + " --> " + t.end,
 			t.caption,
 			''
 		)

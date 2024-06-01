@@ -1,10 +1,13 @@
 screenChange()
 
 window.addEventListener("resize", function() {
-	screenChange()
+	//screenChange()
+
 })
 
 function screenChange() {
+	//document.getElementById("output").style.height = (85 * document.getElementById("transcriptContainer").clientHeight) / 100
+
 	if (window.matchMedia("(min-width: 1081px)").matches) {
 		// large
 		let larges = document.querySelectorAll("[class*='@vp-l']");

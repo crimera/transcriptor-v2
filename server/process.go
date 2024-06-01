@@ -9,7 +9,7 @@ import (
 )
 
 func getModels() []string {
-	return []string{"ggml-base.en-q5_1.bin"}
+	return []string{"ggml-base.en-q5_1.bin", "ggml-tiny.en.bin", "ggml-small.en.bin"}
 }
 
 func process(modelpath string, filename string, callback whisper.SegmentCallback) (e error) {

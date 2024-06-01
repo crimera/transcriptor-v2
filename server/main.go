@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/ggerganov/whisper.cpp/bindings/go/pkg/whisper"
 	"github.com/gorilla/websocket"
@@ -59,8 +60,8 @@ func main() {
 					cb := func(segment whisper.Segment) {
 						currentTranscription = append(currentTranscription, Transcript{
 							Num:     segment.Num,
-							Start:   fmt.Sprintf("%02.f:%02.f:%02.f", segment.Start.Hours(), segment.Start.Minutes(), segment.Start.Seconds()),
-							End:     fmt.Sprintf("%02.f:%02.f:%02.f", segment.End.Hours(), segment.End.Minutes(), segment.End.Seconds()),
+							Start:   parseTime(segment.Start),
+							End:     parseTime(segment.End),
 							Caption: segment.Text,
 						})
 						conn.WriteJSON(currentTranscription)
@@ -102,4 +103,21 @@ func main() {
 	})
 
 	http.ListenAndServe(":8080", nil)
+}
+
+func parseTime(duration time.Duration) string {
+	hours := duration / time.Hour
+	duration -= hours * time.Hour
+
+	minutes := duration / time.Minute
+	duration -= minutes * time.Minute
+
+	seconds := duration / time.Second
+	duration -= seconds * time.Second
+
+	milliseconds := duration / time.Millisecond
+
+	formattedTime := fmt.Sprintf("%02d:%02d:%02d,%03d", hours, minutes, seconds, milliseconds)
+	fmt.Println("Formatted time:", formattedTime)
+	return formattedTime
 }

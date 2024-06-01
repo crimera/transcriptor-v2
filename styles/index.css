@@ -11,7 +11,7 @@
 }
 
 .iconBtn {
-	@apply inline-flex items-center justify-center text-sm font-medium tracking-wide transition-colors duration-200 bg-white border-2 rounded-xl text-neutral-700 border-neutral-200/70 enabled:hover:bg-neutral-100 active:bg-white disabled:opacity-50
+	@apply inline-flex items-center justify-center text-sm font-medium tracking-wide transition-colors duration-200 bg-white border-2 rounded-xl text-neutral-700 border-neutral-400/70 enabled:hover:bg-neutral-100 active:bg-white disabled:opacity-50
 }
 
 .iconBtn img {
