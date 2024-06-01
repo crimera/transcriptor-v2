@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ggerganov/whisper.cpp/bindings/go/pkg/whisper"
+	"github.com/crimera/whisper.cpp/bindings/go/pkg/whisper"
 	"github.com/gorilla/websocket"
 )
 
@@ -58,6 +58,7 @@ func main() {
 					conn.WriteMessage(messageType, []byte("processing"))
 
 					cb := func(segment whisper.Segment) {
+
 						currentTranscription = append(currentTranscription, Transcript{
 							Num:     segment.Num,
 							Start:   parseTime(segment.Start),
@@ -118,6 +119,5 @@ func parseTime(duration time.Duration) string {
 	milliseconds := duration / time.Millisecond
 
 	formattedTime := fmt.Sprintf("%02d:%02d:%02d,%03d", hours, minutes, seconds, milliseconds)
-	fmt.Println("Formatted time:", formattedTime)
 	return formattedTime
 }

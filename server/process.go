@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ggerganov/whisper.cpp/bindings/go/pkg/whisper"
+	"github.com/crimera/whisper.cpp/bindings/go/pkg/whisper"
 	wav "github.com/go-audio/wav"
 )
 
