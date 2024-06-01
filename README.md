@@ -4,12 +4,7 @@
 - air
 - whisper.cpp go bindings
 
-# Usage
-- start web php
+# Dev
 ```sh
-php -S 127.0.0.1:8000
-```
-- start trancript server
-```sh
-cd server; ./run.sh
+npm run dev
 ```
