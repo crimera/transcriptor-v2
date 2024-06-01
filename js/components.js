@@ -2,23 +2,24 @@
 export function transcriptItem(transcript, id, editClicked) {
 	// TODO: add the start timestamp
 	let caption = pharagraphView({
-		classList: "mr-xs caption",
+		classList: 'flex-1 mr-1',
 		text: transcript.caption
 	})
 
 	let editing = false
 
 	const transcriptContainer = divView({
-		classList: 'transcript-item flex vcenter space-between',
+		classList: 'transcript-item flex justify-between',
 		content: [
 			caption,
 		]
 	})
 
 	const editButton = buttonView({
+		classList: 'p-1 ml-2 border rounded-lg',
 		id: id,
 		content: [
-			imgView({ src: "assets/icons/create-outline.svg", width: 15, height: 15 })
+			imgView({ src: "assets/icons/create-outline.svg", width: 20, height: 20 })
 		],
 		onClick: () => {
 			const input = transcriptContainer.firstChild
@@ -36,7 +37,7 @@ export function transcriptItem(transcript, id, editClicked) {
 					height: input.clientHeight,
 					value: input.textContent,
 					fontFamily: 'sans-serif',
-					fontSize: 15
+					fontSize: 16,
 				}))
 
 				editing = true
@@ -54,12 +55,16 @@ export function transcriptItem(transcript, id, editClicked) {
  * @param {string} options.src
  * @param {number} options.width
  * @param {number} options.height
+ * @param {string} options.classList
  * @param {Function} options.onClick
  * @param {HTMLElement[]} options.content
  **/
 function imgView(options) {
 	const element = document.createElement('img')
 	element.src = options.src
+
+	if (options.classList)
+		element.classList = options.classList
 
 	if (options.width)
 		element.width = options.width
@@ -85,11 +90,15 @@ function imgView(options) {
  * @param {HTMLElement[]} options.content
  * @param {string} options.placeHolder
  * @param {string} options.value
+ * @param {string} options.classList
  * @param {number} options.fontSize
  * @param {string} options.fontFamily
  **/
 function textAreaView(options) {
 	const element = document.createElement('textarea')
+
+	if (options.classList)
+		element.classList = options.classList
 
 	if (options.width)
 		element.style.width = options.width
