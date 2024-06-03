@@ -41,36 +41,44 @@ socket.onopen = function() {
 	console.log("Status: Connected\n")
 
 	// get current transcripts
-	socket.send("currentTranscription")
+	socket.send(JSON.stringify({ type: "currentTranscription" }))
 }
 
 /** @param e { MessageEvent } **/
 socket.onmessage = function(e) {
 	/** @type { []Transcript } **/
 	try {
-		currentTranscription = JSON.parse(e.data)
+		const msg = JSON.parse(e.data)
 
-		if (currentTranscription.length != 0) {
-			exportBtn.removeAttribute('disabled')
-		}
+		console.log(msg)
 
-		output.innerHTML = ''
+		switch (msg.type) {
+			case "currentTranscription": {
+				output.innerHTML = ''
 
-		currentTranscription.forEach((e) => {
-			/** @type {Transcript} **/
-			const transcript = e
-			output.appendChild(transcriptItem(
-				transcript,
-				transcript.num.toString(),
-				(id, caption) => {
-					socket.send("change:" + id + ":" + caption)
-					socket.send("currentTranscription")
-					console.log(id + caption)
+				currentTranscription = msg.transcriptions
+
+				if (currentTranscription.length != 0) {
+					exportBtn.removeAttribute('disabled')
+
+					currentTranscription.forEach((e) => {
+						/** @type {Transcript} **/
+						const transcript = e
+						output.appendChild(transcriptItem(
+							transcript,
+							transcript.num.toString(),
+							(id, caption) => {
+								socket.send(JSON.stringify({ type: "change", num: parseInt(id), caption: caption }))
+								socket.send(JSON.stringify({ type: "currentTranscription" }))
+								console.log(id + caption)
+							}
+						))
+					})
 				}
-			))
-		})
-	} catch {
-		switch (e.data) {
+
+
+				break
+			}
 			case "done": {
 				console.log("Done")
 				doneBtn.removeAttribute("disabled")
@@ -88,6 +96,7 @@ socket.onmessage = function(e) {
 				break
 			}
 		}
+	} catch {
 	}
 };
 
@@ -101,15 +110,21 @@ function isLoading(loading) {
 	}
 }
 
-export function process(filename) {
+export function process(filename, translate) {
+	const message = {
+		type: "process",
+		filename: filename,
+		translate: translate
+	}
+
 	output.innerHTML = ""
-	socket.send("process:" + filename)
+	socket.send(JSON.stringify(message))
 }
 
 export function doneClicked() {
 	if (currentTranscription.length != 0) {
 		history.push(currentTranscription)
-		socket.send("clearCurrentTranscription")
+		socket.send(JSON.stringify({ type: "clearCurrentTranscription" }))
 		currentTranscription = []
 		output.innerHTML = ""
 

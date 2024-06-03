@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/crimera/whisper.cpp/bindings/go/pkg/whisper"
@@ -22,6 +20,20 @@ type Transcript struct {
 	Caption string `json:"caption"`
 }
 
+type Message struct {
+	Type      string `json:"type"`
+	Filename  string `json:"filename"`
+	Translate bool   `json:"translate"`
+	Message   string `json:"message"`
+	Num       int    `json:"num"`
+	Caption   string `json:"caption"`
+}
+
+type ServerMessage struct {
+	Type           string       `json:"type"`
+	Transcriptions []Transcript `json:"transcriptions"`
+}
+
 func main() {
 	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 
@@ -36,26 +48,27 @@ func main() {
 		defer conn.Close()
 
 		for {
+			var msg Message
 
-			messageType, messageByte, err := conn.ReadMessage()
+			err = conn.ReadJSON(&msg)
 			if err != nil {
-				log.Println("read failed:", err)
-				break
+				fmt.Println(err.Error())
 			}
 
-			message := string(messageByte)
+			conn.WriteJSON(ServerMessage{
+				Type: "bruh",
+			})
 
-			fmt.Print(message)
-
-			cmd := strings.Split(message, ":")
-
-			switch cmd[0] {
+			switch msg.Type {
 			case "process":
 				{
 					currentTranscription = []Transcript{}
 
 					fmt.Println("Processing")
-					conn.WriteMessage(messageType, []byte("processing"))
+					// conn.WriteMessage(messageType, []byte("processing"))
+					err = conn.WriteJSON(ServerMessage{
+						Type: "processing",
+					})
 
 					cb := func(segment whisper.Segment) {
 
@@ -65,37 +78,48 @@ func main() {
 							End:     parseTime(segment.End),
 							Caption: segment.Text,
 						})
-						conn.WriteJSON(currentTranscription)
+						conn.WriteJSON(ServerMessage{
+							Type:           "currentTranscription",
+							Transcriptions: currentTranscription,
+						})
 					}
 
-					e := process("models/"+getModels()[0], "files/"+cmd[1], cb)
+					e := process("models/"+getModels()[0], "files/"+msg.Filename, cb)
 					if e != nil {
 						// TODO: should post an error message
-						conn.WriteMessage(messageType, []byte("error"))
+						// conn.WriteMessage(messageType, []byte("error"))
+						conn.WriteJSON(ServerMessage{
+							Type: "error",
+						})
 					}
 
 					fmt.Println("Done processing")
-					conn.WriteMessage(messageType, []byte("done"))
+					//conn.WriteMessage(messageType, []byte("done"))
+					conn.WriteJSON(ServerMessage{
+						Type: "done",
+					})
+
 					break
 				}
 			case "change":
 				{
+					fmt.Println("change called")
 					// TODO: handle error
-					num, _ := strconv.Atoi(cmd[1])
-					currentTranscription[num].Caption = cmd[2]
+					currentTranscription[msg.Num].Caption = msg.Caption
 					break
 				}
-			}
-
-			switch message {
 			case "currentTranscription":
 				{
 					fmt.Println("Sent transcripts")
-					conn.WriteJSON(currentTranscription)
+					conn.WriteJSON(ServerMessage{
+						Type:           "currentTranscription",
+						Transcriptions: currentTranscription,
+					})
 					break
 				}
 			case "clearCurrentTranscription":
 				{
+					fmt.Println("Transcriptions cleared")
 					currentTranscription = []Transcript{}
 					break
 				}

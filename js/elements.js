@@ -7,9 +7,10 @@ export const importBtn = document.getElementById("importBtn")
 /** @type { HTMLInputElement } **/
 export const fileInput = document.getElementById("fileInput")
 export const exportBtn = document.getElementById('exportBtn')
+const translateSwitch = document.getElementById('translateSwitch')
 
 processBtn.addEventListener("click", () => {
-	process(fileInput.files.item(0).name)
+	process(fileInput.files.item(0).name, translateSwitch.checked)
 })
 
 doneBtn.addEventListener("click", () => {
@@ -51,7 +52,7 @@ fileInput.addEventListener("change", (e) => {
 	};
 
 	// path to server would be where you'd normally post the form to
-	xhr.open('POST', 'upload.php', true);
+	xhr.open('POST', 'php/upload.php', true);
 	xhr.send(fd);
 
 	console.log("uploaded, I guess")
