@@ -8,16 +8,23 @@ import (
 	wav "github.com/go-audio/wav"
 )
 
-func getModels() []string {
-	return []string{"ggml-base.en-q5_1.bin", "ggml-tiny.en.bin", "ggml-small.en.bin"}
+type WhisperOptions struct {
+	Filename  string
+	ModelPath string
+	Translate bool
+	Language  string
 }
 
-func process(modelpath string, filename string, callback whisper.SegmentCallback) (e error) {
+func getModels() []string {
+	return []string{"ggml-base-q5_1.bin", "ggml-base.en-q5_1.bin", "ggml-medium-q5_0.bin"}
+}
+
+func process(options WhisperOptions, callback whisper.SegmentCallback) (e error) {
 	var samples []float32 // Samples to process
 
 	// Open the file
-	fmt.Printf("Loading %q\n", filename)
-	fh, err := os.Open(filename)
+	fmt.Printf("Loading %q\n", options.Filename)
+	fh, err := os.Open(options.Filename)
 	if err != nil {
 		panic(err)
 	}
@@ -38,7 +45,7 @@ func process(modelpath string, filename string, callback whisper.SegmentCallback
 	}
 
 	// Load the model
-	model, err := whisper.New(modelpath)
+	model, err := whisper.New(options.ModelPath)
 	if err != nil {
 		return err
 	}
@@ -48,6 +55,12 @@ func process(modelpath string, filename string, callback whisper.SegmentCallback
 	context, err := model.NewContext()
 	if err != nil {
 		return err
+	}
+
+	if options.Translate {
+		fmt.Println(options.Translate)
+		fmt.Println("we be translating")
+		context.SetTranslate(true)
 	}
 
 	if err := context.Process(samples, callback, nil); err != nil {

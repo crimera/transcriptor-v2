@@ -84,7 +84,12 @@ func main() {
 						})
 					}
 
-					e := process("models/"+getModels()[0], "files/"+msg.Filename, cb)
+					e := process(WhisperOptions{
+						ModelPath: "models/" + getModels()[2],
+						Filename:  "files/" + msg.Filename,
+						Translate: msg.Translate,
+					}, cb)
+
 					if e != nil {
 						// TODO: should post an error message
 						// conn.WriteMessage(messageType, []byte("error"))

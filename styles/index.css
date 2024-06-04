@@ -3,7 +3,15 @@
 @tailwind utilities;
 
 .card {
-	@apply bg-white border rounded-lg p-7 py-4 border-neutral-200/60
+	@apply bg-white border rounded-lg border-neutral-200/60
+}
+
+.card>.head {
+	@apply p-3 border-b
+}
+
+.card>.body {
+	@apply mt-4 m-3
 }
 
 .btn {
@@ -65,4 +73,19 @@ h5 {
 
 .transcript-item:hover button {
 	visibility: visible;
+}
+
+.scroller {
+	scrollbar-color: grey white;
+}
+
+
+#exportBtn {
+	border-width: 1px;
+	padding: 1;
+}
+
+#exportBtn img {
+	/* filter: brightness(0) saturate(100%) invert(29%) sepia(97%) saturate(2167%) hue-rotate(214deg) brightness(93%) contrast(98%); */
+	margin: 5px 5px;
 }
