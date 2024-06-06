@@ -12,3 +12,12 @@ function checkBox(string $id, string $name, string $text)
         </div>
         HTML;
 }
+
+function input(string $id, string $placeholder, string $type)
+{
+        echo <<<HTML
+        <div class="w-full">
+                <input name="$id" id="$id" type="$type" placeholder="$placeholder" class="flex w-full h-10 px-3 py-2 text-sm bg-white border rounded-md border-neutral-300 ring-offset-background placeholder:text-neutral-500 disabled:cursor-not-allowed disabled:opacity-50" />
+        </div>
+        HTML;
+}
